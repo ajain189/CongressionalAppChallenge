@@ -1,0 +1,102 @@
+<!-- profile.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elevate - Profile</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <h1>Elevate</h1>
+            <p>Unlock Your Full Potential with this Revolutionary App for Students</p>
+        </header>
+        <nav>
+            <a href="index.html" class="nav-link">Dashboard</a>
+            <a href="goals.html" class="nav-link">Goals</a>
+            <a href="challenges.html" class="nav-link">Challenges</a>
+            <a href="profile.html" class="nav-link">Profile</a>
+            <a href="map.html" class="nav-link">Study Map</a>
+            <button id="darkModeToggle" class="btn btn-outline-secondary"><i class="fas fa-moon"></i> Dark Mode</button>
+        </nav>
+        <main>
+            <section id="profile" class="profile">
+                <h2>Profile</h2>
+                <div id="profile-info" class="card">
+                    <p><strong>Name:</strong> <span id="name">John Doe</span></p>
+                    <p><strong>Email:</strong> <span id="email">johndoe@example.com</span></p>
+                    <p><strong>Age:</strong> <span id="age">15</span></p>
+                    <p><strong>Location:</strong> <span id="location">Raleigh, NC</span></p>
+                    <p><strong>Occupation:</strong> <span id="occupation">Student</span></p>
+                </div>
+                <button id="edit-profile-btn" class="btn btn-primary mt-3">Edit Profile</button>
+                <div id="edit-profile-form" class="card mt-3" style="display: none;">
+                    <div class="form-group">
+                        <label for="edit-name">Name</label>
+                        <input type="text" id="edit-name" class="form-control" placeholder="Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-email">Email</label>
+                        <input type="email" id="edit-email" class="form-control" placeholder="Email">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-age">Age</label>
+                        <input type="number" id="edit-age" class="form-control" placeholder="Age">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-location">Location</label>
+                        <input type="text" id="edit-location" class="form-control" placeholder="Location">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-occupation">Occupation</label>
+                        <input type="text" id="edit-occupation" class="form-control" placeholder="Occupation">
+                    </div>
+                    <button id="save-profile-btn" class="btn btn-success mt-3">Save Changes</button>
+                    <button id="cancel-edit-btn" class="btn btn-secondary mt-3">Cancel</button>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="script.js"></script>
+    <script>
+        const editProfileBtn = document.getElementById('edit-profile-btn');
+        const editProfileForm = document.getElementById('edit-profile-form');
+        const saveProfileBtn = document.getElementById('save-profile-btn');
+        const cancelEditBtn = document.getElementById('cancel-edit-btn');
+        const profileInfo = document.getElementById('profile-info');
+
+        editProfileBtn.addEventListener('click', () => {
+            profileInfo.style.display = 'none';
+            editProfileForm.style.display = 'block';
+            editProfileBtn.style.display = 'none';
+            
+            document.getElementById('edit-name').value = document.getElementById('name').textContent;
+            document.getElementById('edit-email').value = document.getElementById('email').textContent;
+            document.getElementById('edit-age').value = document.getElementById('age').textContent;
+            document.getElementById('edit-location').value = document.getElementById('location').textContent;
+            document.getElementById('edit-occupation').value = document.getElementById('occupation').textContent;
+        });
+
+        saveProfileBtn.addEventListener('click', () => {
+            document.getElementById('name').textContent = document.getElementById('edit-name').value;
+            document.getElementById('email').textContent = document.getElementById('edit-email').value;
+            document.getElementById('age').textContent = document.getElementById('edit-age').value;
+            document.getElementById('location').textContent = document.getElementById('edit-location').value;
+            document.getElementById('occupation').textContent = document.getElementById('edit-occupation').value;
+            
+            profileInfo.style.display = 'block';
+            editProfileForm.style.display = 'none';
+            editProfileBtn.style.display = 'block';
+        });
+
+        cancelEditBtn.addEventListener('click', () => {
+            profileInfo.style.display = 'block';
+            editProfileForm.style.display = 'none';
+            editProfileBtn.style.display = 'block';
+        });
+    </script>
+</body>
+</html>

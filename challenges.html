@@ -1,0 +1,82 @@
+<!-- challenges.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elevate - Challenges</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body.dark-mode {
+            background-color: #121212;
+            color: #ffffff;
+        }
+        .dark-mode .card {
+            background-color: #1e1e1e;
+            border-color: #333;
+        }
+        .dark-mode .navbar {
+            background-color: #333;
+        }
+        .dark-mode .nav-link {
+            color: #ffffff;
+        }
+        .dark-mode .btn-outline-secondary {
+            color: #ffffff;
+            border-color: #ffffff;
+        }
+        .dark-mode .btn-outline-secondary:hover {
+            background-color: #ffffff;
+            color: #333;
+        }
+        .dark-mode .challenge-list li {
+            background-color: #1e1e1e;
+            border: 1px solid #333;
+            padding: 10px;
+            margin-bottom: 5px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <h1>Elevate</h1>
+            <p>Unlock Your Full Potential with this Revolutionary App for Students</p>
+        </header>
+        <nav class="navbar">
+            <a href="index.html" class="nav-link">Dashboard</a>
+            <a href="goals.html" class="nav-link">Long-Term Goals</a>
+            <a href="challenges.html" class="nav-link">Challenges</a>
+            <a href="profile.html" class="nav-link">Profile</a>
+            <a href="map.html" class="nav-link">Study Map</a>
+            <button id="darkModeToggle" class="btn btn-outline-secondary"><i class="fas fa-moon"></i> Dark Mode</button>
+        </nav>
+        <main>
+            <section id="challenges" class="challenges">
+                <h2>Challenges</h2>
+                <ul class="challenge-list">
+                    <li>Complete a 10-minute meditation session</li>
+                    <li>Write 500 words</li>
+                    <li>Do 50 push-ups</li>
+                </ul>
+            </section>
+        </main>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            const body = document.body;
+
+            // Function to toggle dark mode
+            function toggleDarkMode() {
+                body.classList.toggle('dark-mode');
+            }
+
+            // Add event listener to the dark mode toggle button
+            darkModeToggle.addEventListener('click', toggleDarkMode);
+        });
+    </script>
+</body>
+</html>

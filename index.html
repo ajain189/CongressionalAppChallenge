@@ -1,0 +1,386 @@
+<!-- index.html (Dashboard) -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elevate</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        .study-tip-card {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+        .study-tip-card h3 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+        .study-tip-card p {
+            font-size: 1.2em;
+            color: #555;
+        }
+        .study-tip-card button {
+            margin-top: 10px;
+        }
+        body.dark-mode {
+            background-color: #121212;
+            color: #ffffff;
+        }
+        .dark-mode .card {
+            background-color: #1e1e1e;
+            border-color: #333;
+        }
+        .dark-mode .study-tip-card {
+            background-color: #1e1e1e;
+            border-color: #333;
+        }
+        .dark-mode .navbar {
+            background-color: #333;
+        }
+        .dark-mode .nav-link {
+            color: #ffffff;
+        }
+        .dark-mode .btn-outline-secondary {
+            color: #ffffff;
+            border-color: #ffffff;
+        }
+        .dark-mode .btn-outline-secondary:hover {
+            background-color: #ffffff;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <h1>Elevate</h1>
+            <p>Unlock Your Full Potential with this Revolutionary App for Students</p>
+        </header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a href="index.html" class="nav-link">Dashboard</a>
+            <a href="goals.html" class="nav-link">Long-Term Goals</a>
+            <a href="challenges.html" class="nav-link">Challenges</a>
+            <a href="profile.html" class="nav-link">Profile</a>
+            <a href="map.html" class="nav-link">Study Map</a>
+            <button id="darkModeToggle" class="btn btn-outline-secondary ml-2">
+                <i class="fas fa-moon"></i> Dark Mode
+            </button>
+        </nav>
+        <main>
+            <section id="dashboard" class="dashboard">
+                <div class="card">
+                    <h3>Daily Progress</h3>
+                    <div class="progress-bar">
+                        <div class="progress"></div>
+                    </div>
+                    <p>75% completed</p>
+                </div>
+                <div class="card">
+                    <h3>Pomodoro Timer</h3>
+                    <div id="timer" class="display-4 text-center">25:00</div>
+                    <div class="text-center mt-3">
+                        <button id="startPomodoro" class="btn btn-primary">Start</button>
+                        <button id="resetPomodoro" class="btn btn-secondary">Reset</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>Achievements</h3>
+                    <div class="badges">
+                        <div class="badge earned"><i class="fas fa-book"></i></div>
+                        <div class="badge earned"><i class="fas fa-dumbbell"></i></div>
+                        <div class="badge"><i class="fas fa-medal"></i></div>
+                        <div class="badge"><i class="fas fa-brain"></i></div>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>Daily Goals <button id="edit-daily-goals" class="edit-button"><i class="fas fa-edit"></i></button></h3>
+                    <ul id="daily-goals" class="goal-list">
+                        <!-- Daily goals will be populated here -->
+                    </ul>
+                </div>
+                <div class="card study-tip-card">
+                    <h3>Study Tip of the Day</h3>
+                    <p id="tipText" class="lead"></p>
+                    <button id="newTip" class="btn btn-info">New Tip</button>
+                </div>
+                <div class="card">
+                    <h3>Motivation</h3>
+                    <p id="motivation-quote"></p>
+                </div>
+            </section>
+            <section id="goals" class="goals">
+                <h2>Long-term Goals</h2>
+                <ul class="goal-list">
+                    <li>Learn a new language</li>
+                    <li>Run a marathon</li>
+                    <li>Read 50 books</li>
+                </ul>
+            </section>
+            <section id="challenges" class="challenges">
+                <h2>Challenges</h2>
+                <ul class="challenge-list">
+                    <li>Complete a 10-minute meditation session</li>
+                    <li>Write 500 words</li>
+                    <li>Do 50 push-ups</li>
+                </ul>
+            </section>
+            <section id="profile" class="profile">
+                <h2>Profile</h2>
+                <div class="profile-info">
+                    <p><i class="fas fa-user"></i> Name: John Doe</p>
+                    <p><i class="fas fa-envelope"></i> Email: johndoe@example.com</p>
+                    <p><i class="fas fa-calendar-alt"></i> Member since: January 1, 2023</p>
+                    <p><i class="fas fa-trophy"></i> Achievements: 10</p>
+                    <p><i class="fas fa-tasks"></i> Completed challenges: 25</p>
+                </div>
+            </section>
+        </main>
+    </div>
+    <div id="modal-window" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>You've got this!</h2>
+            <p id="modal-message">Remember, every small step counts. Keep pushing forward!</p>
+        </div>
+    </div>
+    <div id="edit-goals-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Edit Daily Goals</h2>
+            <ul id="edit-daily-goals-list">
+                <!-- Editable daily goals will be populated here -->
+            </ul>
+            <button id="add-daily-goal">Add Goal</button>
+            <button id="save-daily-goals">Save Changes</button>
+        </div>
+    </div>
+    <script>
+        // Array of daily goals
+        let dailyGoals = [
+            { text: "Study for math test", completed: false },
+            { text: "30 minutes exercise", completed: false },
+            { text: "Read a chapter", completed: false },
+            { text: "Practice meditation", completed: false },
+            { text: "Learn a new skill", completed: false },
+            { text: "Write in journal", completed: false },
+            { text: "Cook a healthy meal", completed: false }
+        ];
+
+        // Array of motivational quotes
+        const motivationalQuotes = [
+            "The future belongs to those who believe in the beauty of their dreams. - Eleanor Roosevelt",
+            "Believe you can and you're halfway there. - Theodore Roosevelt",
+            "Success is not final, failure is not fatal: it is the courage to continue that counts. - Winston Churchill",
+            "The only way to do great work is to love what you do. - Steve Jobs",
+            "Strive not to be a success, but rather to be of value. - Albert Einstein",
+            "The best way to predict the future is to create it. - Peter Drucker",
+            "Don't watch the clock; do what it does. Keep going. - Sam Levenson"
+        ];
+
+        // Array of study tips
+        const studyTips = [
+            "Take regular breaks to stay focused.",
+            "Use the Pomodoro technique to manage your time.",
+            "Find a quiet place to study.",
+            "Stay organized with a study schedule.",
+            "Review your notes regularly.",
+            "Teach what you've learned to someone else.",
+            "Stay hydrated and eat healthy snacks."
+        ];
+
+        // Function to get a random item from an array
+        function getRandomItem(arr) {
+            return arr[Math.floor(Math.random() * arr.length)];
+        }
+
+        // Populate daily goals
+        function populateDailyGoals() {
+            const dailyGoalsList = document.getElementById('daily-goals');
+            dailyGoalsList.innerHTML = '';
+            dailyGoals.forEach((goal, index) => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <span>${goal.text}</span>
+                    <button class="complete-goal btn btn-success" data-index="${index}"><i class="fas fa-check"></i> Complete</button>
+                `;
+                li.querySelector('.complete-goal').addEventListener('click', (e) => {
+                    const index = e.target.getAttribute('data-index');
+                    dailyGoals.splice(index, 1);
+                    populateDailyGoals();
+                    updateProgress();
+                });
+                dailyGoalsList.appendChild(li);
+            });
+            updateProgress();
+        }
+
+        // Update progress bar
+        function updateProgress() {
+            const totalGoals = dailyGoals.length;
+            const completedGoals = 7 - totalGoals; // Assuming we start with 7 goals
+            const progressPercentage = (completedGoals / 7) * 100;
+            const progressBar = document.querySelector('.progress');
+            const progressText = document.querySelector('.card p');
+            progressBar.style.width = `${progressPercentage}%`;
+            progressText.textContent = `${Math.round(progressPercentage)}% completed`;
+        }
+
+        // Set daily motivational quote
+        const motivationQuote = document.getElementById('motivation-quote');
+        motivationQuote.textContent = getRandomItem(motivationalQuotes);
+
+        // Update quote daily
+        function updateDailyQuote() {
+            const now = new Date();
+            const tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+            const timeToTomorrow = tomorrow - now;
+
+            setTimeout(() => {
+                motivationQuote.textContent = getRandomItem(motivationalQuotes);
+                updateDailyQuote();
+            }, timeToTomorrow);
+        }
+
+        updateDailyQuote();
+
+        // Set study tip of the day
+        const tipText = document.getElementById('tipText');
+        tipText.textContent = getRandomItem(studyTips);
+
+        // Update study tip on button click
+        document.getElementById('newTip').addEventListener('click', () => {
+            tipText.textContent = getRandomItem(studyTips);
+        });
+
+        // Edit daily goals functionality
+        const editDailyGoalsBtn = document.getElementById('edit-daily-goals');
+        const editGoalsModal = document.getElementById('edit-goals-modal');
+        const closeModalBtns = document.getElementsByClassName('close');
+        const editDailyGoalsList = document.getElementById('edit-daily-goals-list');
+        const addDailyGoalBtn = document.getElementById('add-daily-goal');
+        const saveDailyGoalsBtn = document.getElementById('save-daily-goals');
+
+        editDailyGoalsBtn.addEventListener('click', () => {
+            editGoalsModal.style.display = 'block';
+            populateEditableGoals();
+        });
+
+        Array.from(closeModalBtns).forEach(btn => {
+            btn.addEventListener('click', () => {
+                editGoalsModal.style.display = 'none';
+            });
+        });
+
+        function populateEditableGoals() {
+            editDailyGoalsList.innerHTML = '';
+            dailyGoals.forEach((goal, index) => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <input type="text" value="${goal.text}">
+                    <button class="remove-goal" data-index="${index}">Remove</button>
+                `;
+                editDailyGoalsList.appendChild(li);
+            });
+        }
+
+        addDailyGoalBtn.addEventListener('click', () => {
+            const li = document.createElement('li');
+            li.innerHTML = `
+                <input type="text" value="">
+                <button class="remove-goal" data-index="${dailyGoals.length}">Remove</button>
+            `;
+            editDailyGoalsList.appendChild(li);
+        });
+
+        editDailyGoalsList.addEventListener('click', (e) => {
+            if (e.target.classList.contains('remove-goal')) {
+                e.target.parentElement.remove();
+            }
+        });
+
+        saveDailyGoalsBtn.addEventListener('click', () => {
+            const inputs = editDailyGoalsList.getElementsByTagName('input');
+            dailyGoals = Array.from(inputs).map(input => ({ text: input.value.trim(), completed: false })).filter(goal => goal.text !== '');
+            populateDailyGoals();
+            editGoalsModal.style.display = 'none';
+        });
+
+        // Initial population of daily goals
+        populateDailyGoals();
+
+        // Pomodoro Timer functionality
+        let timerInterval;
+        let timerDuration = 25 * 60; // 25 minutes in seconds
+        let timeRemaining = timerDuration;
+        let isTimerRunning = false;
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeRemaining / 60);
+            const seconds = timeRemaining % 60;
+            document.getElementById('timer').textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function startPomodoro() {
+            if (isTimerRunning) {
+                clearInterval(timerInterval);
+                isTimerRunning = false;
+                document.getElementById('startPomodoro').textContent = 'Start';
+            } else {
+                timerInterval = setInterval(() => {
+                    if (timeRemaining > 0) {
+                        timeRemaining--;
+                        updateTimerDisplay();
+                    } else {
+                        clearInterval(timerInterval);
+                        alert('Pomodoro session completed!');
+                    }
+                }, 1000);
+                isTimerRunning = true;
+                document.getElementById('startPomodoro').textContent = 'Stop';
+            }
+        }
+
+        function resetPomodoro() {
+            clearInterval(timerInterval);
+            timeRemaining = timerDuration;
+            updateTimerDisplay();
+            isTimerRunning = false;
+            document.getElementById('startPomodoro').textContent = 'Start';
+        }
+
+        document.getElementById('startPomodoro').addEventListener('click', startPomodoro);
+        document.getElementById('resetPomodoro').addEventListener('click', resetPomodoro);
+
+        // Initial timer display
+        updateTimerDisplay();
+
+        // Dark mode functionality
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const body = document.body;
+
+        function toggleDarkMode() {
+            body.classList.toggle('dark-mode');
+            if (body.classList.contains('dark-mode')) {
+                localStorage.setItem('darkMode', 'enabled');
+                darkModeToggle.innerHTML = '<i class="fas fa-sun"></i> Light Mode';
+            } else {
+                localStorage.setItem('darkMode', 'disabled');
+                darkModeToggle.innerHTML = '<i class="fas fa-moon"></i> Dark Mode';
+            }
+        }
+
+        // Check local storage for dark mode preference
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            body.classList.add('dark-mode');
+            darkModeToggle.innerHTML = '<i class="fas fa-sun"></i> Light Mode';
+        }
+
+        darkModeToggle.addEventListener('click', toggleDarkMode);
+    </script>
+</body>
+</html>

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elevate - Study Map</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        .message-tab {
+            position: fixed;
+            top: 50%;
+            right: 0;
+            transform: translateY(-50%);
+            width: 300px;
+            background: white;
+            border: 1px solid #ccc;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            display: none;
+            z-index: 1000;
+        }
+        .message-tab h3 {
+            margin-top: 0;
+        }
+        .message-tab ul {
+            list-style: none;
+            padding: 0;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .message-tab li {
+            margin-bottom: 10px;
+        }
+        .message-tab .close-btn {
+            float: right;
+            cursor: pointer;
+        }
+        .message-tab .message-input-container {
+            display: flex;
+        }
+        .message-tab input[type="text"] {
+            flex: 1;
+            padding: 5px;
+            margin-right: 5px;
+        }
+        .message-tab button {
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .message-tab button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+    <script>
+        let map;
+        let studyRequests = [
+            { lat: 35.7796, lng: -78.6382, name: "Alice", subject: "I need help with my Calc AB Homework", radius: 500 },
+            { lat: 35.7877, lng: -78.6446, name: "Bob", subject: "I need help with my APUSH Homework", radius: 300 },
+            { lat: 35.7738, lng: -78.6530, name: "Charlie", subject: "I need help with my APES Homework", radius: 400 }
+        ];
+        let myLocation = { lat: 35.7800, lng: -78.6500 };
+        let messages = {};
+
+        async function initMap() {
+            const { Map } = await google.maps.importLibrary("maps");
+            const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
+
+            map = new Map(document.getElementById('map'), {
+                center: { lat: 35.7796, lng: -78.6382 },
+                zoom: 12,
+                mapId: 'DEMO_MAP_ID',
+            });
+
+            studyRequests.forEach(request => {
+                let circle = new google.maps.Circle({
+                    map: map,
+                    radius: request.radius,
+                    center: { lat: request.lat, lng: request.lng },
+                    fillColor: '#AA0000',
+                    fillOpacity: 0.2,
+                    strokeColor: '#AA0000',
+                    strokeOpacity: 0.5,
+                    strokeWeight: 2
+                });
+
+                let infoWindow = new google.maps.InfoWindow({
+                    content: `<h3>${request.name}</h3><p>Subject: ${request.subject}</p><button onclick="openMessageTab('${request.name}')" style="padding: 5px 10px; background-color: #007bff; color: white; border: none; cursor: pointer; border-radius: 5px;">Message</button>`
+                });
+
+                circle.addListener('click', () => {
+                    infoWindow.setPosition(circle.getCenter());
+                    infoWindow.open(map);
+                });
+            });
+
+            let myMarker = new AdvancedMarkerElement({
+                map: map,
+                position: myLocation,
+                title: "My Location"
+            });
+        }
+
+        function handleMapError() {
+            document.getElementById('map').innerHTML = '<p>Failed to load Google Maps. Please check your API key and internet connection.</p>';
+        }
+
+        window.addEventListener('error', (event) => {
+            if (event.message.includes("Google Maps")) {
+                handleMapError();
+            }
+        });
+
+        window.onload = () => {
+            const script = document.createElement('script');
+            script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyBp3bKm74D_xum223bWwVl6qC8LwYntdcE&callback=initMap`;
+            script.async = true;
+            script.defer = true;
+            document.head.appendChild(script);
+        };
+
+        function openMessageTab(name) {
+            const messageTab = document.getElementById('message-tab');
+            messageTab.style.display = 'block';
+            document.getElementById('message-recipient').textContent = name;
+            const messageList = document.getElementById('message-list');
+            messageList.innerHTML = '';
+            if (messages[name]) {
+                messages[name].forEach(message => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `<strong>${message.sender}:</strong> ${message.text}`;
+                    messageList.appendChild(li);
+                });
+            }
+        }
+
+        function closeMessageTab() {
+            const messageTab = document.getElementById('message-tab');
+            messageTab.style.display = 'none';
+        }
+
+        function sendMessage() {
+            const messageInput = document.getElementById('message-input');
+            const messageList = document.getElementById('message-list');
+            const message = messageInput.value;
+            const recipient = document.getElementById('message-recipient').textContent;
+            if (message) {
+                const li = document.createElement('li');
+                li.innerHTML = `<strong>You:</strong> ${message}`;
+                messageList.appendChild(li);
+                if (!messages[recipient]) {
+                    messages[recipient] = [];
+                }
+                messages[recipient].push({ sender: 'You', text: message });
+                messageInput.value = '';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const messageInput = document.getElementById('message-input');
+            messageInput.addEventListener('keypress', (event) => {
+                if (event.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <h1>Elevate</h1>
+            <p>Unlock Your Full Potential with this Revolutionary App for Students</p>
+        </header>
+        <nav>
+            <a href="index.html" class="nav-link">Dashboard</a>
+            <a href="goals.html" class="nav-link">Long-Term Goals</a>
+            <a href="challenges.html" class="nav-link">Challenges</a>
+            <a href="profile.html" class="nav-link">Profile</a>
+            <a href="map.html" class="nav-link">Study Map</a>
+            <button id="darkModeToggle" class="btn btn-outline-secondary"><i class="fas fa-moon"></i> Dark Mode</button>
+        </nav>
+        <main>
+            <section id="map-section" class="map-section">
+                <div id="map" style="height: 600px; width: 100%;"></div>
+                <section id="message-tab" class="message-tab">
+                    <span class="close-btn" onclick="closeMessageTab()">x</span>
+                    <h3>Message <span id="message-recipient"></span></h3>
+                    <ul id="message-list"></ul>
+                    <div class="message-input-container">
+                        <input type="text" id="message-input" placeholder="Type your message here">
+                        <button onclick="sendMessage()">Send</button>
+                    </div>
+                </section>
+            </section>
+        </main>
+    </div>
+</body>
+</html>
